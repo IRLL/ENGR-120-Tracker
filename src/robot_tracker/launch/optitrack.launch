@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+	<!--<node name="drone_mux" pkg="robot_tracker" type="drone_mux.py" required="true"/>-->
+	<node name="location" pkg="robot_tracker" type="location_optitrack.py" required="true"/>
+	<include file="vrpn.launch"/>
+
+	<!-- settings file -->
+	<rosparam command="load" file="$(find robot_tracker)/settings/optitrack_room.yaml" />
+
+</launch>

@@ -225,7 +225,7 @@ uc_interface.X/
 #############
 ## ROS
 #############
-!launch/*.launch
+!*.launch
 build/
 devel/
 bin/
