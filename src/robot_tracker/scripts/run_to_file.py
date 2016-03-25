@@ -1,14 +1,25 @@
 #!/usr/bin/env python
+
+"""
+Author: Brandon Kallaher (brandon.kallaher@wsu.edu)
+Description:
+    Subscribes to /robot/location and saves the data to a csv file
+"""
+
 import rospy
 from geometry_msgs.msg import Pose
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
+#Define the path to save the run files
+dirbase="/home/bkallaher/runs/"
+
 #globals for use in callback
-locx = np.array([0, 1, 2]) #list of x positions
-locy = np.array([0, 2, 3]) #list of y positions
-locz = np.array([0, 3, 4]) #list of z positions
+locx = np.array([0, 1, 2, 3, 4]) #list of x positions
+locy = np.array([0, 2, 3, 4, 5]) #list of y positions
+locz = np.array([0, 3, 4, 5, 6]) #list of z positions
+quat = np.array([5, 3, 9 ,2])
 
 #setup the plotting
 # plt.ion()
@@ -16,14 +27,25 @@ locz = np.array([0, 3, 4]) #list of z positions
 
 def shutdown_callback():
     #Save the data on exit
-    dat = np.asarray([locx, locy, locz])
-    np.savetxt("/home/bkallaher/runs/run.csv", dat, delimiter=",")
+    qx = np.pad([quat[0],0], (0,locx.size-2), mode='constant', constant_values=0)
+    qy = np.pad([quat[1],0], (0,locx.size-2), mode='constant', constant_values=0)
+    qz = np.pad([quat[2],0], (0,locx.size-2), mode='constant', constant_values=0)
+    qw = np.pad([quat[3],0], (0,locx.size-2), mode='constant', constant_values=0)
+
+    dat = np.vstack([locx, locy, locz, qx, qy, qz, qw])
+    np.savetxt(dirbase + "run.csv", dat, delimiter=",")
 
 def add_to_path(data):
     locs.append([data.position.x, data.position.y, data.position.z])
     locx = np.append(locx, np.array([data.position.x]))
     locy = np.append(locy, np.array([data.position.y]))
     locz = np.append(locz, np.array([data.position.z]))
+    if quat.size:
+        quat[0] = data.orientation.x
+        quat[1] = data.orientation.y
+        quat[2] = data.orientation.z
+        quat[3] = data.orientation.w
+
 
 #init node and subscriber
 rospy.init_node('dataSaver')
