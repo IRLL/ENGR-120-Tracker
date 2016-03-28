@@ -40,6 +40,7 @@ def add_to_path(data):
     locx = np.append(locx, np.array([data.position.x]))
     locy = np.append(locy, np.array([data.position.y]))
     locz = np.append(locz, np.array([data.position.z]))
+
     if quat.size:
         quat[0] = data.orientation.x
         quat[1] = data.orientation.y

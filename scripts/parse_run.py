@@ -58,11 +58,14 @@ print "theta:", np.subtract(theta0, theta1)
 
 #plot the data
 fig = plt.figure()
-ax = fig.gca(projection='3d')
-ax.plot(x, y, zs=z, color='b', marker='x', linewidth=5)
-ax.plot(bx, by, zs=bz, marker='o', linewidth=3, color='r')
-ax.plot(xr, yr, zs=zr, color='g')
+ax = fig.gca()
+ax.plot(x, y, color='b', linewidth=5)
+ax.plot(bx, by, linewidth=5, color='r')
+#ax.plot(xr, yr, color='g')
 ax.set_xlabel('x')
 ax.set_ylabel('y')
+plt.margins(0.05, 0.1)
 plt.draw()
 plt.show(block=True)
+
+fig.savefig(dirbase + "out.png", transparent=True, bbox_inches='tight')
