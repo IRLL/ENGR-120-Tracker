@@ -67,7 +67,7 @@ ax.set_xlabel('x')
 ax.set_ylabel('y')
 plt.margins(0.05, 0.1)
 plt.draw()
-plt.show(block=True)
+#plt.show(block=False)
 
 fig.savefig(dirbase + "out.png", transparent=True, bbox_inches='tight')
 
@@ -84,10 +84,13 @@ mask = cv2.inRange(hsv, low_b, high_b)
 
 res = cv2.bitwise_and(img, img, mask=mask)
 
-cv2.imshow('image', img)
-cv2.imshow('HSV', hsv)
-cv2.imshow('mask', mask)
-cv2.imshow('res', res)
+# cv2.imshow('image', img)
+# cv2.imshow('HSV', hsv)
+# cv2.imshow('mask', mask)
+# cv2.imshow('res', res)
 
-cv2.waitKey(0)
+b,g,r = cv2.split(res)
+
+print cv2.countNonZero(b)
+
 cv2.destroyAllWindows()
