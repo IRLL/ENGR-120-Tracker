@@ -3,7 +3,7 @@
 """
 Author: Brandon Kallaher (brandon.kallaher@wsu.edu)
 Description:
-    Reads a csv compares it to a baseline and generates an accuracy measurement
+    Reads a csv compares it to a baseline and generates an image for processing
 """
 
 import numpy as np
@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import math
 import tf.transformations as transform
+import cv2
 
 #Define the path to load the run file and base
 dirbase="/home/bkallaher/runs/"
@@ -69,3 +70,24 @@ plt.draw()
 plt.show(block=True)
 
 fig.savefig(dirbase + "out.png", transparent=True, bbox_inches='tight')
+
+
+#Load the new image for image processing
+img = cv2.imread(dirbase + "out.png")
+
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+low_b = np.array([110,50,50])
+high_b = np.array([130,255,255])
+
+mask = cv2.inRange(hsv, low_b, high_b)
+
+res = cv2.bitwise_and(img, img, mask=mask)
+
+cv2.imshow('image', img)
+cv2.imshow('HSV', hsv)
+cv2.imshow('mask', mask)
+cv2.imshow('res', res)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
