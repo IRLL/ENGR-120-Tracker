@@ -11,9 +11,16 @@ from geometry_msgs.msg import Pose
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+import os
+import time
+
+name = raw_input("Enter a name for the run: ")
+print name
+t = time.localtime()
 
 #Define the path to save the run files
-dirbase="/home/bkallaher/runs/"
+dirbase=os.environ['HOME'] + "/runs/{0}/{1}/".format(t.tm_mon, t.tm_mday)
+fname = "run_{0}_{1}:{2}.csv".format(name, t.tm_hour, t.tm_min)
 
 #globals for use in callback
 locx = np.array([0, 1, 2, 3, 4]) #list of x positions
@@ -33,7 +40,9 @@ def shutdown_callback():
     qw = np.pad([quat[3],0], (0,locx.size-2), mode='constant', constant_values=0)
 
     dat = np.vstack([locx, locy, locz, qx, qy, qz, qw])
-    np.savetxt(dirbase + "run.csv", dat, delimiter=",")
+    if not os.path.exists(dirbase):
+        os.makedirs(dirbase)
+    np.savetxt(dirbase + fname, dat, delimiter=",")
 
 def add_to_path(data):
     locs.append([data.position.x, data.position.y, data.position.z])
