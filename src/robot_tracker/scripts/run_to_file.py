@@ -20,7 +20,7 @@ t = time.localtime()
 
 #Define the path to save the run files
 dirbase=os.environ['HOME'] + "/runs/{0}/{1}/".format(t.tm_mon, t.tm_mday)
-fname = "run_{0}_{1}:{2}.csv".format(name, t.tm_hour, t.tm_min)
+fname = "run_{0}_{1}:{2}:{3}.csv".format(name, t.tm_hour, t.tm_min, t.tm_sec)
 
 #globals for use in callback
 locx = np.array([0, 1, 2, 3, 4]) #list of x positions
