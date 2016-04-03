@@ -19,7 +19,7 @@ for root, dirs, files in walk("/home/bkallaher/runs"):
         for root, dirs, files in walk("/home/bkallaher/runs/" + dir):
             print root
             for item in ffilter(files, "*.csv"):
-                scores[item[:-4] + "-" + root[-4:]] =  parse_run(root + '/', item, "/home/bkallaher/runs/base.csv")
+                scores[item[4:-4] + "-" + root[-4:]] =  parse_run(root + '/', item, "/home/bkallaher/runs/base.csv")
             rmdir(root + "/tmp", ignore_errors=True)
         print ""
 
