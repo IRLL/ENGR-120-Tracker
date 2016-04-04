@@ -11,15 +11,16 @@ from os import walk
 from fnmatch import filter as ffilter
 from shutil import rmtree as rmdir #Need this function in order to delete tmp dir without deleting tmp files
 import json
+from os import environ
 
 scores = {}
 
-for root, dirs, files in walk("/home/bkallaher/runs"):
+for root, dirs, files in walk(environ('HOME') + "/runs"):
     for dir in dirs:
-        for root, dirs, files in walk("/home/bkallaher/runs/" + dir):
+        for root, dirs, files in walk(environ('HOME') + "/runs/" + dir):
             print root
             for item in ffilter(files, "*.csv"):
-                scores[item[4:-4] + "-" + root[-4:]] =  parse_run(root + '/', item, "/home/bkallaher/runs/base.csv")
+                scores[item[4:-4] + "-" + root[-4:]] =  parse_run(root + '/', item, environ('HOME') + "/runs/base.csv")
             rmdir(root + "/tmp", ignore_errors=True)
         print ""
 

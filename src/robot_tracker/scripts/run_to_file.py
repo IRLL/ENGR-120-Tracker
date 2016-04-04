@@ -34,6 +34,7 @@ quat = np.array([5, 3, 9 ,2])
 
 def shutdown_callback():
     #Save the data on exit
+    #Pad the end of the quaternion values with zeros
     qx = np.pad([quat[0],0], (0,locx.size-2), mode='constant', constant_values=0)
     qy = np.pad([quat[1],0], (0,locx.size-2), mode='constant', constant_values=0)
     qz = np.pad([quat[2],0], (0,locx.size-2), mode='constant', constant_values=0)
@@ -62,15 +63,5 @@ rospy.init_node('dataSaver')
 loc_sub = rospy.Subscriber('/robot/location', Pose)
 
 rospy.on_shutdown(shutdown_callback)
-
-#Plotting of the data
-'''for i in range(0,10):
-    fig.add_subplot(111, projection='3d').plot(locx, locy, locz, marker='x')
-    plt.draw()
-    locx = np.append(locx, np.array([np.random.rand(1)]))
-    locy = np.append(locy, np.array([np.random.rand(1)]))
-    locz = np.append(locz, np.array([np.random.rand(1)]))
-    plt.show()
-'''
 
 rospy.spin()

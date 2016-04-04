@@ -49,7 +49,7 @@ def parse_run(basedir, fname, baseline):
     quat = np.transpose(tmp)
     theta0 = transform.euler_from_quaternion(quat)
     print "theta0", theta0
-
+fname
     tmp = np.loadtxt(baseline, delimiter=",")
     bx = tmp[0,:]
     by = tmp[1,:]
@@ -92,7 +92,7 @@ def parse_run(basedir, fname, baseline):
 
     # cv2.imshow('image', img)
     # cv2.imshow('HSV', hsv)
-    # cv2.imshow('mask', mask)
+    # cv2.imshow('mask', mask)2878
     # cv2.imshow('res', res)
 
     b,g,r = cv2.split(res)
